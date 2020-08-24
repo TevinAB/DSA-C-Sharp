@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DSA_C_Sharp.Lists {
 
-    class DynamicArray<T> {
+    class DynamicArray<T> : IEnumerable {
         private int _length; // The size presented to the user.
         private T[] _array;
 
@@ -43,15 +44,27 @@ namespace DSA_C_Sharp.Lists {
             
         }
 
+        /// <summary>
+        /// Checks if the Array is empty.
+        /// </summary>
+        /// <returns></returns>
         public bool IsEmpty() {
             return Length <= 0;
         }
 
+        /// <summary>
+        /// Clears the array.
+        /// </summary>
         public void Clear() {
-            Array.Clear(_array, 0, Length);
-            Length = 0;
+            if (Size > 0) {
+                Array.Clear(_array, 0, Length);
+                Length = 0;
+            }
         }
 
+        /// <summary>
+        /// Increases the capacity to twice its current size.
+        /// </summary>
         private void IncreaseCapacity() {
             Size *= 2;
             Array.Resize(ref _array, Size);
@@ -127,11 +140,13 @@ namespace DSA_C_Sharp.Lists {
         }
 
 
-
-
-
-
-
+        public IEnumerator GetEnumerator() {
+            foreach (T item in _array) {
+                if (item != null) {
+                    yield return item;
+                }
+            }
+        }
     }
 
 }
