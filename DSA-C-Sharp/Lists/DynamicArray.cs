@@ -17,7 +17,10 @@ namespace DSA_C_Sharp.Lists {
             _length = 0;
         }
 
-        public DynamicArray() { }
+        public DynamicArray() {
+            Size = 6;
+            Length = 0;
+        }
 
         public int Length {
             get => _length;
