@@ -142,10 +142,8 @@ namespace DSA_C_Sharp.Lists {
 
 
         public IEnumerator GetEnumerator() {
-            foreach (T item in _array) {
-                if (item != null) {
-                    yield return item;
-                }
+            for (int i = 0; i < _length; i++) {
+                yield return i;
             }
         }
     }

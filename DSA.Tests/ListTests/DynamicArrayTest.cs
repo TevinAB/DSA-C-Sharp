@@ -41,7 +41,13 @@ namespace DSA.Tests {
                 dArray.RemoveLast();
             }
 
-            Assert.Equal(1500,dArray.Size);
+            int si = 0;
+            foreach (int i in dArray) {
+                si++;
+            }
+            
+
+            Assert.Equal(si,dArray.Size);
 
 
         }
