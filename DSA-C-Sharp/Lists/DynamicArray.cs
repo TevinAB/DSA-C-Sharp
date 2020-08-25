@@ -1,43 +1,39 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace DSA_C_Sharp.Lists {
 
-    class DynamicArray<T> : IEnumerable {
-        private int _length; // The size presented to the user.
+    public class DynamicArray<T> : IEnumerable {
+        private int _length { get; set; } // The size presented to the user.
         private T[] _array;
 
         public DynamicArray(int capacity) {
             if (capacity < 0) throw new ArgumentException("Capacity must be greater than zero.");
-            Size = capacity;
+            _array = new T[capacity];
             _length = 0;
         }
 
         public DynamicArray() {
-            Size = 6;
-            Length = 0;
+            _array = new T[6];
+            _length = 0;
         }
 
-        public int Length {
+
+        public int Size {
             get => _length;
-            private set => _length += value;
         }
-
-        private int Size { get; set; }
 
         public T this[int index] {
             get {
-                if (index > -1 && index < Size) {
+                if (index > -1 && index < _array.Length) {
                     return _array[index];
                 }
                 throw new IndexOutOfRangeException();
             }
             set {
-                if (index > Size || index < 0) {
+                if (index > _array.Length || index < 0) {
                     throw new IndexOutOfRangeException("Index is not valid.");
                 } else {
                     InsertAt(index, value);
@@ -52,16 +48,16 @@ namespace DSA_C_Sharp.Lists {
         /// </summary>
         /// <returns></returns>
         public bool IsEmpty() {
-            return Length <= 0;
+            return _length <= 0;
         }
 
         /// <summary>
         /// Clears the array.
         /// </summary>
         public void Clear() {
-            if (Size > 0) {
-                Array.Clear(_array, 0, Length);
-                Length = 0;
+            if (_array.Length > 0) {
+                Array.Clear(_array, 0, _length);
+                _length = 0;
             }
         }
 
@@ -69,8 +65,13 @@ namespace DSA_C_Sharp.Lists {
         /// Increases the capacity to twice its current size.
         /// </summary>
         private void IncreaseCapacity() {
-            Size *= 2;
-            Array.Resize(ref _array, Size);
+            try {
+                int capacity = _array.Length + 10000;
+                Array.Resize(ref _array, capacity);
+            } catch (OutOfMemoryException) {
+
+                throw;
+            }
         }
 
         /// <summary>
@@ -79,15 +80,12 @@ namespace DSA_C_Sharp.Lists {
         /// <param name="value"> The value to insert.</param>
         public void Insert(T value) {
 
-            if (Length < Size) {
-                _array[Length] = value;
-                Length++;
-            } else {
+            if (_length == _array.Length) {
                 IncreaseCapacity();
-                _array[Length] = value;
-                Length++;
             }
 
+            _array[_length] = value;
+            _length++;
         }
 
 
@@ -98,14 +96,14 @@ namespace DSA_C_Sharp.Lists {
         /// <param name="value"> The value to insert.</param>
         public void InsertAt(int index, T value) {
 
-            if (Length == Size) {
+            if (_length == _array.Length) {
                 IncreaseCapacity();
             }
 
-            if (index < Length) {
-                Array.Copy(_array, index, _array, index + 1, (Length - index));
+            if (index < _length) {
+                Array.Copy(_array, index, _array, index + 1, (_length - index));
                 _array[index] = value;
-                Length++;
+                _length++;
             }
 
         }
@@ -115,9 +113,9 @@ namespace DSA_C_Sharp.Lists {
         /// Removes the value at the front of the list.
         /// </summary>
         public void RemoveLast() {
-            if (Length > 0) {
-                _array[Length-1] = default;
-                Length--;
+            if (_length > 0) {
+                _array[_length - 1] = default;
+                _length--;
             }
         }
 
@@ -127,14 +125,14 @@ namespace DSA_C_Sharp.Lists {
         /// <param name="index"> The index number to remove from.</param>
         public void RemoveAt(int index) {
 
-            if (index > -1 && index < Length) {
-                Length--;
+            if (index > -1 && index < _length) {
+                _length--;
 
-                if (index < Length) {
-                    Array.Copy(_array, index + 1, _array, index, (Length - index));
+                if (index < _length) {
+                    Array.Copy(_array, index + 1, _array, index, (_length - index));
                 }
 
-                _array[Length] = default;
+                _array[_length] = default;
                 
             } else {
                 throw new IndexOutOfRangeException();
