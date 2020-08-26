@@ -1,16 +1,14 @@
-﻿using System;
+﻿
+using Xunit;
 
+namespace DSA.Tests.ListTests {
 
-namespace DSA.Tests {
-
-    
     public class LinkedListTest {
 
+        [Fact]
         public void InsertTest() {
-            
+
         }
 
-
     }
-
 }
