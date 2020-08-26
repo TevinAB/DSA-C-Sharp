@@ -2,7 +2,6 @@
 using System.Collections;
 
 
-
 namespace DSA_C_Sharp.Lists {
 
     public class DynamicArray<T> : IEnumerable {
@@ -104,6 +103,8 @@ namespace DSA_C_Sharp.Lists {
                 Array.Copy(_array, index, _array, index + 1, (_length - index));
                 _array[index] = value;
                 _length++;
+            } else {
+                throw new IndexOutOfRangeException();
             }
 
         }
