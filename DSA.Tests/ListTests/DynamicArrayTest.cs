@@ -15,42 +15,37 @@ namespace DSA.Tests {
                 array.Insert(i);
             }
 
-            for (int i = 500; i < 1500; i++) {
-                array.RemoveAt(i);
-            }
+            int count = 10000;
 
-
-            int count = 10000 - 1000;
-
-            Assert.True(array.Size == count, "Count check failed..");
+            Assert.Equal(count,array.Size);
 
 
             array.InsertAt(499, 99999);
 
             Assert.True(array[499] == 99999, "Insert At test failed.");
 
-            //----------------------------------------------------\\
+        }
 
-            DynamicArray<int> dArray = new DynamicArray<int>(10);
-
+        [Fact]
+        public void RemoveTest() {
+            DynamicArray<int> array = new DynamicArray<int>(10);
             for (int i = 0; i < 2000; i++) {
-                dArray.Insert(i);
+                array.Insert(i);
             }
 
             for (int i = 0; i < 500; i++) {
-                dArray.RemoveLast();
+                array.RemoveLast();
             }
 
-            int si = 0;
-            foreach (int i in dArray) {
-                si++;
-            }
-            
+            Assert.Equal(2000 - 500, array.Size);
 
-            Assert.Equal(si,dArray.Size);
 
+            array.RemoveAt(210);
+
+            Assert.Equal(211,array[210]);
 
         }
+
 
     }
 
