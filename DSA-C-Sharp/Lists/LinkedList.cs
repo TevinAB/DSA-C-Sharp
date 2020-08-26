@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace DSA_C_Sharp.Lists {
 
@@ -27,9 +28,9 @@ namespace DSA_C_Sharp.Lists {
     }
 
 
-    public class LinkedList<T> {
+    public class LinkedList<T> : IEnumerable {
 
-        public Node<T> head;
+        Node<T> head;
         Node<T> tail;
 
         public int Count { get; set; }
@@ -47,7 +48,7 @@ namespace DSA_C_Sharp.Lists {
         /// Returns the data stored in the first element.
         /// </summary>
         public T First {
-            get => head.Data;
+            get => head.Data == null ? default : head.Data;
         }
 
 
@@ -55,7 +56,7 @@ namespace DSA_C_Sharp.Lists {
         /// Returns the data stored in the last element.
         /// </summary>
         public T Last {
-            get => tail.Data;
+            get => tail.Data == null ? default : tail.Data;
         }
 
 
@@ -88,6 +89,8 @@ namespace DSA_C_Sharp.Lists {
 
             if (!IsEmpty()) {
                 node.Next = head;
+            } else {
+                tail = node;
             }
 
             head = node;
@@ -103,20 +106,18 @@ namespace DSA_C_Sharp.Lists {
         /// <param name="data"></param>
         public void InsertAt(int index, T data) {
 
-            if (!IsEmpty() && (index > 0 && index < Count)) {
+            if (index > 0 && index < Count) {
                 Node<T> node = new Node<T>(data);
                 Node<T> current = head;
 
-                int i = 0;
-                while (current.Next != null && i < index) {
+                int i = 1;
+                while (i < index-1) {
                     current = current.Next;
                     i++;
                 }
 
-                if (current.Next != null && i == (index - 1)) {
-                    node.Next = current.Next;
-                    current.Next = node;
-                }
+                node.Next = current.Next;
+                current.Next = node;
 
                 Count++;
 
@@ -139,9 +140,9 @@ namespace DSA_C_Sharp.Lists {
             if (index == 0) {
                 head = head.Next;
                 Count--;
-            } else
-            //Remove from the tail
-            if (index >= Count - 1) {
+            } 
+            else if (index >= Count - 1) {
+                //Remove from the tail
                 Node<T> current = head;
 
                 int i = 0;
@@ -155,11 +156,13 @@ namespace DSA_C_Sharp.Lists {
                 Count--;
 
 
-            } else {
-                //Remove from the head.
+            } 
+            else {
+                //Remove elsewhere(in between head and tail).
                 Node<T> current = head;
                 int i = 0;
-                while (i < index) {
+
+                while (i < index-1) {
                     current = current.Next;
                     i++;
                 }
@@ -191,7 +194,7 @@ namespace DSA_C_Sharp.Lists {
             }
 
             //Between the head(inclusive) and tail nodes.
-            if (index > -1 && index < Count - 2) {
+            if (index > -1 && index <= Count - 2) {
                 int i = 0;
                 Node<T> current = head;
                 while (i != index) {
@@ -202,13 +205,61 @@ namespace DSA_C_Sharp.Lists {
                 return current.Data;
 
 
-            } else if (index == Count - 1) {
+            } else if (index == (Count - 1)) {
                 return tail.Data;
             } else {
                 throw new IndexOutOfRangeException();
             }
 
         }
+
+        public IEnumerator GetEnumerator() {
+            return new ListEnumertator(this);
+        }
+
+        internal class ListEnumertator : IEnumerator<T> {
+
+            Node<T> head_;
+            LinkedList<T> list;
+
+            public ListEnumertator(LinkedList<T> collection) {
+                list = collection;
+                head_ = list.head;
+                
+            }
+
+            public T Current {
+                get { return head_.Data; }
+            }
+
+            object IEnumerator.Current { 
+                get { return Current; }
+            }
+
+            public void Dispose() {
+                list = null;
+                head_ = null;
+            }
+
+            public bool MoveNext() {
+                head_ = head_.Next;
+
+                return head_ == null;
+            }
+
+            public void Reset() {
+                head_ = list.head;
+            }
+        }
+
+
+
+
+
+
+
+
+
 
 
     }
