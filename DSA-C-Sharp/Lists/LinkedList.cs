@@ -27,9 +27,7 @@ namespace DSA_C_Sharp.Lists {
 
     }
 
-
     public class LinkedList<T> : IEnumerable {
-
         Node<T> head;
         Node<T> tail;
 
@@ -51,7 +49,6 @@ namespace DSA_C_Sharp.Lists {
             get => head.Data == null ? default : head.Data;
         }
 
-
         /// <summary>
         /// Returns the data stored in the last element.
         /// </summary>
@@ -59,13 +56,11 @@ namespace DSA_C_Sharp.Lists {
             get => tail.Data == null ? default : tail.Data;
         }
 
-
         /// <summary>
         /// Creates node using the data and add it to the end of the list.
         /// </summary>
         /// <param name="data"></param>
         public void Append(T data) {
-
             Node<T> node = new Node<T>(data);
 
             if (IsEmpty()) {
@@ -75,9 +70,7 @@ namespace DSA_C_Sharp.Lists {
                 tail.Next = node;
                 tail = node;
             }
-
             Count++;
-
         }
 
         /// <summary>
@@ -95,9 +88,7 @@ namespace DSA_C_Sharp.Lists {
 
             head = node;
             Count++;
-
         }
-
 
         /// <summary>
         /// Inserts a node at a specific index.
@@ -105,7 +96,6 @@ namespace DSA_C_Sharp.Lists {
         /// <param name="index"></param>
         /// <param name="data"></param>
         public void InsertAt(int index, T data) {
-
             if (index > 0 && index < Count) {
                 Node<T> node = new Node<T>(data);
                 Node<T> current = head;
@@ -126,16 +116,13 @@ namespace DSA_C_Sharp.Lists {
             } else {
                 Append(data);
             }
-
         }
-
 
         /// <summary>
         /// Removes a node from a specific position.
         /// </summary>
         /// <param name="index"></param>
         public void RemoveAt(int index) {
-
             //Remove from head.
             if (index == 0) {
                 head = head.Next;
@@ -154,8 +141,6 @@ namespace DSA_C_Sharp.Lists {
                 current.Next = null;
                 tail = current;
                 Count--;
-
-
             } 
             else {
                 //Remove elsewhere(in between head and tail).
@@ -167,9 +152,7 @@ namespace DSA_C_Sharp.Lists {
                     i++;
                 }
                 current.Next = current.Next.Next;
-
             }
-
         }
 
         /// <summary>
@@ -181,14 +164,12 @@ namespace DSA_C_Sharp.Lists {
             Count = 0;
         }
 
-
         /// <summary>
         /// Get the data at the given index.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
         public T GetAt(int index) {
-
             if (IsEmpty()) {
                 return default;
             }
@@ -204,13 +185,11 @@ namespace DSA_C_Sharp.Lists {
 
                 return current.Data;
 
-
             } else if (index == (Count - 1)) {
                 return tail.Data;
             } else {
                 throw new IndexOutOfRangeException();
             }
-
         }
 
         public IEnumerator GetEnumerator() {
@@ -218,14 +197,12 @@ namespace DSA_C_Sharp.Lists {
         }
 
         internal class ListEnumertator : IEnumerator<T> {
-
             Node<T> head_;
             LinkedList<T> list;
 
             public ListEnumertator(LinkedList<T> collection) {
                 list = collection;
                 head_ = list.head;
-                
             }
 
             public T Current {
@@ -243,7 +220,6 @@ namespace DSA_C_Sharp.Lists {
 
             public bool MoveNext() {
                 head_ = head_.Next;
-
                 return head_ == null;
             }
 
@@ -251,9 +227,5 @@ namespace DSA_C_Sharp.Lists {
                 head_ = list.head;
             }
         }
-
-
     }
-
-
 }

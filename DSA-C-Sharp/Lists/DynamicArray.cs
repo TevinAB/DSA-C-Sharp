@@ -19,7 +19,6 @@ namespace DSA_C_Sharp.Lists {
             _length = 0;
         }
 
-
         public int Size {
             get => _length;
         }
@@ -37,9 +36,7 @@ namespace DSA_C_Sharp.Lists {
                 } else {
                     InsertAt(index, value);
                 }
-                
             }
-            
         }
 
         /// <summary>
@@ -78,7 +75,6 @@ namespace DSA_C_Sharp.Lists {
         /// </summary>
         /// <param name="value"> The value to insert.</param>
         public void Insert(T value) {
-
             if (_length == _array.Length) {
                 IncreaseCapacity();
             }
@@ -87,14 +83,12 @@ namespace DSA_C_Sharp.Lists {
             _length++;
         }
 
-
         /// <summary>
         /// Insert a value at a specific position.
         /// </summary>
         /// <param name="index"> The position to insert at.</param>
         /// <param name="value"> The value to insert.</param>
         public void InsertAt(int index, T value) {
-
             if (_length == _array.Length) {
                 IncreaseCapacity();
             }
@@ -106,10 +100,8 @@ namespace DSA_C_Sharp.Lists {
             } else {
                 throw new IndexOutOfRangeException();
             }
-
         }
 
-        
         /// <summary>
         /// Removes the value at the front of the list.
         /// </summary>
@@ -125,7 +117,6 @@ namespace DSA_C_Sharp.Lists {
         /// </summary>
         /// <param name="index"> The index number to remove from.</param>
         public void RemoveAt(int index) {
-
             if (index > -1 && index < _length) {
                 _length--;
 
@@ -138,9 +129,7 @@ namespace DSA_C_Sharp.Lists {
             } else {
                 throw new IndexOutOfRangeException();
             }
-
         }
-
 
         public IEnumerator GetEnumerator() {
             for (int i = 0; i < _length; i++) {

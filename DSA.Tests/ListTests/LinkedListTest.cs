@@ -16,7 +16,6 @@ namespace DSA.Tests.ListTests {
             list.Append(5);
 
             Assert.Equal(5, list.Count);
-
         }
 
         [Fact]
@@ -30,7 +29,6 @@ namespace DSA.Tests.ListTests {
             Assert.Equal(3, list.Count);
             Assert.Equal(212, list.First);
         }
-
 
         [Fact]
         public void InsertAtTest() {
@@ -48,7 +46,6 @@ namespace DSA.Tests.ListTests {
             Assert.Equal(21, list.Last);
         }
 
-
         [Fact]
         public void RemoveAtTest() {
             LinkedList<int> list = new LinkedList<int>();
@@ -60,7 +57,6 @@ namespace DSA.Tests.ListTests {
             list.RemoveAt(1);
 
             Assert.Equal(33, list.GetAt(1));
-
         }
 
     }

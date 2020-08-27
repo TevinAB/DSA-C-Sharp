@@ -1,5 +1,4 @@
-﻿using System;
-using DSA_C_Sharp.Lists;
+﻿using DSA_C_Sharp.Lists;
 using Xunit;
 
 namespace DSA.Tests {
@@ -8,7 +7,6 @@ namespace DSA.Tests {
 
         [Fact]
         public void InsertTest() {
-
             DynamicArray<int> array = new DynamicArray<int>();
 
             for (int i = 0; i < 10000; i++) {
@@ -19,11 +17,9 @@ namespace DSA.Tests {
 
             Assert.Equal(count,array.Size);
 
-
             array.InsertAt(499, 99999);
 
             Assert.True(array[499] == 99999, "Insert At test failed.");
-
         }
 
         [Fact]
@@ -43,10 +39,6 @@ namespace DSA.Tests {
             array.RemoveAt(210);
 
             Assert.Equal(211,array[210]);
-
         }
-
-
     }
-
 }

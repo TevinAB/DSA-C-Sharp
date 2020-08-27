@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSA_C_Sharp.Lists {
 
@@ -19,7 +15,6 @@ namespace DSA_C_Sharp.Lists {
         public DNode<T> Next { get; set; }
 
         public DNode<T> Prev { get; set; }
-
 
     }
 
@@ -38,7 +33,6 @@ namespace DSA_C_Sharp.Lists {
             get => GetAt(index);
             set => SetAt(index, value);
         }
-
 
         /// <summary>
         /// Checks if the list is empty.
@@ -157,7 +151,6 @@ namespace DSA_C_Sharp.Lists {
                     tail.Next = null;
 
             } else {
-
                 DNode<T> current;
 
                 if (index > (Count/2)) {
@@ -179,8 +172,6 @@ namespace DSA_C_Sharp.Lists {
                     current.Next.Next.Prev = current;
                     current.Next = current.Next.Next;
                 }
-
-
             }
             Count--;
         }
@@ -224,7 +215,6 @@ namespace DSA_C_Sharp.Lists {
                         current = current.Next;
                     }
                 }
-
                 return current.Data;
             }
         }
@@ -244,8 +234,8 @@ namespace DSA_C_Sharp.Lists {
             }
             if (index == Count-1) {
                 tail.Data = data;
+                return;
             } else {
-
                 DNode<T> current;
 
                 if (index > (Count/2)) {
@@ -262,7 +252,6 @@ namespace DSA_C_Sharp.Lists {
                         current = current.Next;
                     }
                 }
-
                 current.Data = data;
             }
         }

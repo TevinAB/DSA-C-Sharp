@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DSA_C_Sharp.Lists;
+﻿using DSA_C_Sharp.Lists;
 using Xunit;
 
 namespace DSA.Tests.ListTests {
@@ -28,7 +25,6 @@ namespace DSA.Tests.ListTests {
             Assert.True(list[3] == "f", "Wrong element.");
         }
 
-
         [Fact]
         public void InsertAt() {
             DLinkedList<int> list = new DLinkedList<int>();
@@ -52,12 +48,7 @@ namespace DSA.Tests.ListTests {
             list.Prepend(9);
 
             Assert.Equal(1,list.GetAt(2));
-
         }
-
-
-
-
 
     }
 }
