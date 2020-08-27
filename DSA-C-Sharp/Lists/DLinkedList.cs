@@ -157,16 +157,30 @@ namespace DSA_C_Sharp.Lists {
                     tail.Next = null;
 
             } else {
-                var current = head;
-                int i = 0;
 
-                while (i < index - 1 && current.Next != null) {
-                    current = current.Next;
-                    i++;
+                DNode<T> current;
+
+                if (index > (Count/2)) {
+                    current = tail;
+
+                    for (int i = Count-1; i > index+1; i--) {
+                        current = current.Prev;
+                    }
+
+                    current.Prev.Prev.Next = current;
+                    current.Prev = current.Prev.Prev;
+                } else {
+
+                    current = head;
+                    for (int i = 0; i < index-1; i++) {
+                        current = current.Next;
+                    }
+
+                    current.Next.Next.Prev = current;
+                    current.Next = current.Next.Next;
                 }
 
-                current.Next.Next.Prev = current;
-                current.Next = current.Next.Next;
+
             }
             Count--;
         }
@@ -250,11 +264,7 @@ namespace DSA_C_Sharp.Lists {
                 }
 
                 current.Data = data;
-
             }
-
-
-
         }
 
     }
