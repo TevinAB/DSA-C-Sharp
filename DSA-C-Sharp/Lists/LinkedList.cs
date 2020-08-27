@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DSA_C_Sharp.Lists {
 
-    public class Node<T> {
+    internal class Node<T> {
         T data;
         Node<T> next;
 
@@ -251,15 +251,6 @@ namespace DSA_C_Sharp.Lists {
                 head_ = list.head;
             }
         }
-
-
-
-
-
-
-
-
-
 
 
     }

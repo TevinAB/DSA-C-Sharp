@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lists\DLinkedList.cs" />
     <Compile Include="Lists\DynamicArray.cs" />
     <Compile Include="Lists\LinkedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
