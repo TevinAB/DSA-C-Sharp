@@ -14,7 +14,7 @@ namespace DSA_C_Sharp.Lists {
             Prev = null;
         }
 
-        public T Data { get; }
+        public T Data { get; set; }
 
         public DNode<T> Next { get; set; }
 
@@ -23,8 +23,7 @@ namespace DSA_C_Sharp.Lists {
 
     }
 
-
-    class DLinkedList<T> {
+    public class DLinkedList<T> {
         DNode<T> head;
         DNode<T> tail;
 
@@ -35,37 +34,65 @@ namespace DSA_C_Sharp.Lists {
 
         public int Count { get; set; }
 
+        public T this[int index] {
+            get => GetAt(index);
+            set => SetAt(index, value);
+        }
+
+
+        /// <summary>
+        /// Checks if the list is empty.
+        /// </summary>
+        /// <returns></returns>
         public bool IsEmpty() {
             return head == null;
         }
 
+        /// <summary>
+        /// Gets data from the head of the list.
+        /// </summary>
         public T First {
-            get => head.Data;
+            get => !IsEmpty() ? head.Data : throw new Exception("The list is empty.");
         }
 
+        /// <summary>
+        /// Gets data from the tail of the list.
+        /// </summary>
         public T Last {
-            get => tail.Data;
+            get => !IsEmpty() ? tail.Data : throw new Exception("The list is empty.");
         }
 
-        public void BoundsCheck(int index) {
-            if (index < 0 || index > Count || IsEmpty()) {
+        /// <summary>
+        /// Checks if index is in bounds.
+        /// </summary>
+        /// <param name="index"></param>
+        private void BoundsCheck(int index) {
+            if (index < 0 || index >= Count || IsEmpty()) {
                 throw new IndexOutOfRangeException();
             }
         }
 
+        /// <summary>
+        /// Appends a Node in the list.
+        /// </summary>
+        /// <param name="data"></param>
         public void Append(T data) {
             DNode<T> node = new DNode<T>(data);
 
             if (IsEmpty()) {
                 head = tail = node;
             } else {
-
                 node.Prev = tail;
                 tail.Next = node;
+                tail = node;
             }
             Count++;
         }
 
+        /// <summary>
+        /// Prepends a Node in the list.
+        /// </summary>
+        /// <param name="data"></param>
         public void Prepend(T data) {
             DNode<T> node = new DNode<T>(data);
 
@@ -79,7 +106,11 @@ namespace DSA_C_Sharp.Lists {
             Count++;
         }
 
-
+        /// <summary>
+        /// Insert a node at a given index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="data"></param>
         public void InsertAt(int index,T data) {
 
             BoundsCheck(index);
@@ -89,7 +120,6 @@ namespace DSA_C_Sharp.Lists {
             } else if (index == Count-1) {
                 Append(data);
             } else {
-
                 DNode<T> node = new DNode<T>(data);
                 var current = head;
                 int i = 1;
@@ -106,24 +136,29 @@ namespace DSA_C_Sharp.Lists {
 
                 Count++;
             }
-
         }
 
-
+        /// <summary>
+        /// Removes the node at a given index.
+        /// </summary>
+        /// <param name="index"></param>
         public void RemoveAt(int index) {
 
             BoundsCheck(index);
 
             if (index == 0) {
                 head = head.Next;
+                if (head.Next != null)
+                    head.Next.Prev = null;
 
             } else if (index == Count -1) {
-                tail.Prev.Next = null;
                 tail = tail.Prev;
+                if (tail != null)
+                    tail.Next = null;
 
             } else {
                 var current = head;
-                int i = 1;
+                int i = 0;
 
                 while (i < index - 1 && current.Next != null) {
                     current = current.Next;
@@ -132,46 +167,95 @@ namespace DSA_C_Sharp.Lists {
 
                 current.Next.Next.Prev = current;
                 current.Next = current.Next.Next;
-
             }
-
             Count--;
         }
 
-
+        /// <summary>
+        /// Clears the list.
+        /// </summary>
         public void Clear() {
             head = null;
             tail = null;
             Count = 0;
         }
 
-
+        /// <summary>
+        /// Gets the data at a given index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public T GetAt(int index) {
 
             BoundsCheck(index);
 
             if (index == 0) {
                 return head.Data;
-            } else if (index == Count - 1) {
+            }
+            if (index == Count - 1) {
                 return tail.Data;
             } else {
-                int i = 0;
-                var current = head;
+                DNode<T> current;
 
-                while (i != index) {
-                    current = current.Next;
-                    i++;
+                if (index > (Count/2)) {
+                    current = tail;
+
+                    for (int i = Count-1; i > index; i--) {
+                        current = current.Prev;
+                    }
+                } else {
+                    current = head;
+
+                    for (int i = 0; i < index; i++) {
+                        current = current.Next;
+                    }
                 }
 
                 return current.Data;
+            }
+        }
+
+        /// <summary>
+        /// Set the the value of a node at a give index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="data">Value to set to.</param>
+        public void SetAt(int index,T data) {
+
+            BoundsCheck(index);
+
+            if (index == 0) {
+                head.Data = data;
+                return;
+            }
+            if (index == Count-1) {
+                tail.Data = data;
+            } else {
+
+                DNode<T> current;
+
+                if (index > (Count/2)) {
+                    current = tail;
+
+                    for (int i = Count-1; i > index; i--) {
+                        current = current.Prev;
+                    }
+
+                } else {
+                    current = head;
+
+                    for (int i = 0; i < index; i++) {
+                        current = current.Next;
+                    }
+                }
+
+                current.Data = data;
 
             }
 
 
+
         }
-
-
-
 
     }
 }
