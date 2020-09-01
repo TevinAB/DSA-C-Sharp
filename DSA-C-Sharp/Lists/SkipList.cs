@@ -1,17 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DSA_C_Sharp.Lists {
 
     public class SkipNode<T> : IComparable<SkipNode<T>> where T : IComparable<T> {
         T data;
-
         public SkipNode(T data) {
             this.data = data;
             Next = null;
             Down = null;
             Up = null;
         }
-
 
         public T Data {
             get => data;
@@ -196,6 +195,66 @@ namespace DSA_C_Sharp.Lists {
                 }
             }
             return current;
+        }
+
+        /// <summary>
+        /// If the list contains a given value.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool Contains(T key) {
+            SkipNode<T> node = new SkipNode<T>(key);
+            var current = Tail;
+
+            while (current.Down != null) {
+                int result;
+                if (current.Next != null) {
+                    result = current.Next.CompareTo(node);
+
+                    if (result == -1) {
+                        current = current.Next;
+                    } else
+                    if (result == 1) {
+                        current = current.Down;
+                    } else 
+                    if (result == 0) {
+                        return true;
+                    }
+
+                } else {
+                    current = current.Down;
+                }
+            }
+
+            //Currently at the lowest layer.
+            if (current.Down == null) {
+                while (current.Next != null) {
+                    int result = current.Next.CompareTo(node);
+
+                    if (result == 0) {
+                        return true;
+                    } else 
+                    if(result == 1){
+                        return false;
+                    } else {
+                        current = current.Next;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Delete the node that has the given key value.
+        /// </summary>
+        /// <param name="key"></param>
+        public void Delete(T key) {
+
+        }
+
+        public void ToList(ref List<T> list) {
+
         }
 
     }
