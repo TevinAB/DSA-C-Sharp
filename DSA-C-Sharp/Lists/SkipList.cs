@@ -18,6 +18,8 @@ namespace DSA_C_Sharp.Lists {
 
         public SkipNode<T> Next { get; set; }
 
+        public SkipNode<T> Prev { get; set; }
+
         public SkipNode<T> Up { get; set; }
 
         public SkipNode<T> Down { get; set; }
@@ -46,6 +48,8 @@ namespace DSA_C_Sharp.Lists {
 
         public int MaxLevels { get; }
 
+        public int Count { get; private set; }
+
         public int CurrentMaxLevel { get; set; }
 
         /// <summary>
@@ -54,11 +58,13 @@ namespace DSA_C_Sharp.Lists {
         /// <param name="data"></param>
         public void Insert(T data) {
             SkipNode<T> node = new SkipNode<T>(data);
+            Count++;
 
             //The first entry in the Skip list.
             if (Levels == null) {
                 Levels = new SkipNode<T>(default);
                 Levels.Next = node;
+                node.Prev = Levels;
                 Tail = Levels;
 
                 int count = 0;
@@ -79,6 +85,10 @@ namespace DSA_C_Sharp.Lists {
 
                 if (current != null) {
                     node.Next = current.Next;
+                    node.Prev = current;
+                    if (current.Next != null)
+                        current.Next.Prev = node;
+
                     current.Next = node;
 
                     // Determine how many layers to promote this newly added node.
@@ -126,6 +136,7 @@ namespace DSA_C_Sharp.Lists {
             }
 
             cpyNode.Next = current.Next;
+            cpyNode.Prev = current;
 
             //Connect the new 'copy node' at the top of its original up traversal list.
             var cOrigin = original; //Start at the orginial for this node, which is at the lowest layer.
@@ -135,6 +146,8 @@ namespace DSA_C_Sharp.Lists {
             cpyNode.Down = cOrigin;
             cOrigin.Up = cpyNode;
 
+            if(current.Next != null)
+                current.Next.Prev = cpyNode;
             current.Next = cpyNode;
         }
 
@@ -170,11 +183,11 @@ namespace DSA_C_Sharp.Lists {
                     result = current.Next.CompareTo(node);
 
                     //The current.next object precedes node or if its at the same place in sort order.
-                    if (result == -1 || result == 0) {
+                    if (result == -1) {
                         current = current.Next; // Move to the next node.
                     } else
-                    //The current.next object follows node.
-                    if (result == 1) {
+                    //The current.next object follows node or is a copy.
+                    if (result == 1 || result == 0) {
                         current = current.Down; // Changes level by moving down.
                     }
                 } else {
@@ -187,13 +200,14 @@ namespace DSA_C_Sharp.Lists {
                 while (current.Next != null) {
                     int result = current.Next.CompareTo(node);
 
-                    if(result != 1) {
+                    if(result != 1 || result != 0) {
                         current = current.Next;
                     } else {
                         break;
                     }
                 }
             }
+
             return current;
         }
 
@@ -250,10 +264,33 @@ namespace DSA_C_Sharp.Lists {
         /// </summary>
         /// <param name="key"></param>
         public void Delete(T key) {
+            SkipNode<T> node = new SkipNode<T>(key);
+            var current = GetNode(node);
 
+            if (current != null) {
+                while (current.Up != null) {
+                    current.Prev.Next = current.Next;
+
+                    if (current.Next != null)
+                        current.Next.Prev = current.Prev;
+
+                    current = current.Up;
+                    current.Down = null;
+                }
+            }
+            Count--;
         }
 
-        public void ToList(ref List<T> list) {
+        public List<T> ToList() {
+            List<T> list = new List<T>();
+            var current = Levels.Next;
+
+            while (current != null) {
+                list.Add(current.Data);
+                current = current.Next;
+            }
+
+            return list;
 
         }
 
