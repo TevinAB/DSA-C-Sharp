@@ -45,6 +45,7 @@
     <Compile Include="Lists\DynamicArray.cs" />
     <Compile Include="Lists\LinkedList.cs" />
     <Compile Include="Lists\SkipList.cs" />
+    <Compile Include="Lists\Stack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
