@@ -14,6 +14,10 @@ namespace DSA_C_Sharp.Lists {
             head = null;
         }
 
+        /// <summary>
+        /// Check if the stack is empty.
+        /// </summary>
+        /// <returns></returns>
         public bool IsEmpty() {
             return head == null;
         }

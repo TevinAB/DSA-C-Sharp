@@ -44,6 +44,7 @@
     <Compile Include="Lists\DLinkedList.cs" />
     <Compile Include="Lists\DynamicArray.cs" />
     <Compile Include="Lists\LinkedList.cs" />
+    <Compile Include="Lists\Queue.cs" />
     <Compile Include="Lists\SkipList.cs" />
     <Compile Include="Lists\Stack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
