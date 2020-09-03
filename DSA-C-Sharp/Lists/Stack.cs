@@ -34,7 +34,6 @@ namespace DSA_C_Sharp.Lists {
             Count++;
         }
 
-
         /// <summary>
         /// Removes the last item that was entered.
         /// </summary>
@@ -59,6 +58,5 @@ namespace DSA_C_Sharp.Lists {
 
             return head.Data;
         }
-
     }
 }
