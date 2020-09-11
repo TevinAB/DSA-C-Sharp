@@ -15,7 +15,7 @@ namespace DSA_C_Sharp.Heap {
             if (capacity < 0)
                 throw new ArgumentException("Capacity must be greater than zero");
 
-            collection = new DynamicArray<T>(20);
+            collection = new DynamicArray<T>(capacity);
         }
 
         /// <summary>
