@@ -5,22 +5,22 @@ using System.Collections;
 namespace DSA_C_Sharp.Lists {
 
     public class DynamicArray<T> : IEnumerable {
-        private int _length { get; set; } // The size presented to the user.
+        public int Length { get; set; } // The size presented to the user.
         private T[] _array;
 
         public DynamicArray(int capacity) {
             if (capacity < 0) throw new ArgumentException("Capacity must be greater than zero.");
             _array = new T[capacity];
-            _length = 0;
+            Length = 0;
         }
 
         public DynamicArray() {
             _array = new T[6];
-            _length = 0;
+            Length = 0;
         }
 
         public int Size {
-            get => _length;
+            get => Length;
         }
 
         public T this[int index] {
@@ -44,7 +44,7 @@ namespace DSA_C_Sharp.Lists {
         /// </summary>
         /// <returns></returns>
         public bool IsEmpty() {
-            return _length <= 0;
+            return Length <= 0;
         }
 
         /// <summary>
@@ -52,8 +52,8 @@ namespace DSA_C_Sharp.Lists {
         /// </summary>
         public void Clear() {
             if (_array.Length > 0) {
-                Array.Clear(_array, 0, _length);
-                _length = 0;
+                Array.Clear(_array, 0, Length);
+                Length = 0;
             }
         }
 
@@ -75,12 +75,12 @@ namespace DSA_C_Sharp.Lists {
         /// </summary>
         /// <param name="value"> The value to insert.</param>
         public void Insert(T value) {
-            if (_length == _array.Length) {
+            if (Length == _array.Length) {
                 IncreaseCapacity();
             }
 
-            _array[_length] = value;
-            _length++;
+            _array[Length] = value;
+            Length++;
         }
 
         /// <summary>
@@ -89,14 +89,14 @@ namespace DSA_C_Sharp.Lists {
         /// <param name="index"> The position to insert at.</param>
         /// <param name="value"> The value to insert.</param>
         public void InsertAt(int index, T value) {
-            if (_length == _array.Length) {
+            if (Length == _array.Length) {
                 IncreaseCapacity();
             }
 
-            if (index < _length) {
-                Array.Copy(_array, index, _array, index + 1, (_length - index));
+            if (index < Length) {
+                Array.Copy(_array, index, _array, index + 1, (Length - index));
                 _array[index] = value;
-                _length++;
+                Length++;
             } else {
                 throw new IndexOutOfRangeException();
             }
@@ -106,9 +106,9 @@ namespace DSA_C_Sharp.Lists {
         /// Removes the value at the front of the list.
         /// </summary>
         public void RemoveLast() {
-            if (_length > 0) {
-                _array[_length - 1] = default;
-                _length--;
+            if (Length > 0) {
+                _array[Length - 1] = default;
+                Length--;
             }
         }
 
@@ -117,14 +117,14 @@ namespace DSA_C_Sharp.Lists {
         /// </summary>
         /// <param name="index"> The index number to remove from.</param>
         public void RemoveAt(int index) {
-            if (index > -1 && index < _length) {
-                _length--;
+            if (index > -1 && index < Length) {
+                Length--;
 
-                if (index < _length) {
-                    Array.Copy(_array, index + 1, _array, index, (_length - index));
+                if (index < Length) {
+                    Array.Copy(_array, index + 1, _array, index, (Length - index));
                 }
 
-                _array[_length] = default;
+                _array[Length] = default;
                 
             } else {
                 throw new IndexOutOfRangeException();
@@ -132,7 +132,7 @@ namespace DSA_C_Sharp.Lists {
         }
 
         public IEnumerator GetEnumerator() {
-            for (int i = 0; i < _length; i++) {
+            for (int i = 0; i < Length; i++) {
                 yield return i;
             }
         }
